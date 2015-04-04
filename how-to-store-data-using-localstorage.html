@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<head>
+<script src="scripts/vendor/modernizr.custom.05044.js"></script>
+<script src="scripts/vendor/jquery-1.11.2.min.js"></script>
+
+</head>
+<body>
+<div id="supportsLocalStorage"></div>
+<div id="storedDate"></div>
+<script>
+if (Modernizr.localstorage) {
+  $("#supportsLocalStorage").text("This browser supports local storage");
+  var storedDateName = "storageDate";
+  var storedDate = localStorage.getItem(storedDateName);
+  
+  if(storedDate == null){
+	localStorage.setItem(storedDateName,new Date());
+	 $("#storedDate").text("Storing today's date into local storage. Now, refresh your browser");
+  }else{
+    $("#storedDate").text(storedDate);
+  }
+  
+} else {
+  $("#supportsLocalStorage").text("This browser suports local storage");
+}
+
+
+</script>
+</body>
