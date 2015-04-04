@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <head>
 <script src="scripts/vendor/modernizr.custom.05044.js"></script>
+<script src="scripts/vendor/jquery-1.11.2.min.js"></script>
 <style>
 #drag-elements li {
   display: inline-block;
@@ -21,6 +22,7 @@
 </style>
 </head>
 <body>
+<div id="supportsDragAndDrop"></div>
 
 <ul id="drag-elements">
   <li draggable="true">Element One</li>
@@ -35,5 +37,27 @@
 </div>
 
 <script>
+if (Modernizr.draganddrop) {
+  $("#supportsDragAndDrop").text("This browser supports drag and drop");
+} else {
+  $("#supportsDragAndDrop").text("This browser does not support drag and drop");
+}
+
+var elementBeingDragged;
+
+$('#drag-elements li').on('dragstart',function(e){
+   console.log('drag starts for ' + $(this).text());
+   
+    e.originalEvent.dataTransfer.effectAllowed = 'move';
+	e.originalEvent.dataTransfer.setData('text',$(this).text());
+	elementBeingDragged = $(this);
+});
+
+$("#drop-target-one").on('dragover', function(e){
+	e.preventDefault();
+    var textFromDraggableElement = e.originalEvent.dataTransfer.getData('text');
+	$(this).text(textFromDraggableElement);
+	$(elementBeingDragged).remove();
+});
 </script>
 </body>
