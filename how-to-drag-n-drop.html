@@ -3,7 +3,7 @@
 <script src="scripts/vendor/modernizr.custom.05044.js"></script>
 <script src="scripts/vendor/jquery-1.11.2.min.js"></script>
 <style>
-#drag-elements li {
+li {
   display: inline-block;
   padding: .5em 1em;
   margin: 0 1em 1em 0;
@@ -25,14 +25,14 @@
 <div id="supportsDragAndDrop"></div>
 
 <ul id="drag-elements">
-  <li draggable="true">Element One</li>
-  <li draggable="true">Element Two</li>
-  <li draggable="true">Element Three</li>
-  <li draggable="true">Element Four</li>
-  <li draggable="true">Element Five</li>
+  <li draggable="true"  id="one">Element One</li>
+  <li draggable="true"  id="two">Element Two</li>
+  <li draggable="true"  id="three">Element Three</li>
+  <li draggable="true"  id="four">Element Four</li>
+  <li draggable="true"  id="five">Element Five</li>
 </ul>
 
-<div id="drop-target-one">
+<div id="drop-target-one" ondrop="drop(event)" ondragover="allowDrop(event)">
   Drop Here!
 </div>
 
@@ -43,21 +43,22 @@ if (Modernizr.draganddrop) {
   $("#supportsDragAndDrop").text("This browser does not support drag and drop");
 }
 
-var elementBeingDragged;
-
-$('#drag-elements li').on('dragstart',function(e){
-   console.log('drag starts for ' + $(this).text());
-   
-    e.originalEvent.dataTransfer.effectAllowed = 'move';
-	e.originalEvent.dataTransfer.setData('text',$(this).text());
-	elementBeingDragged = $(this);
+$("#drag-elements li").on('dragstart',function(e){
+    drag(e.originalEvent);
 });
 
-$("#drop-target-one").on('dragover', function(e){
-	e.preventDefault();
-    var textFromDraggableElement = e.originalEvent.dataTransfer.getData('text');
-	$(this).text(textFromDraggableElement);
-	$(elementBeingDragged).remove();
-});
+function allowDrop(ev) {
+    ev.preventDefault();
+}
+
+function drag(ev) {
+    ev.dataTransfer.setData("text", ev.target.id);
+}
+
+function drop(ev) {
+    ev.preventDefault();
+    var data = ev.dataTransfer.getData("text");
+    ev.target.appendChild(document.getElementById(data));
+}
 </script>
 </body>
