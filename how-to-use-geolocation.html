@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<head>
+<script src="scripts/vendor/modernizr.custom.05044.js"></script>
+<script src="scripts/vendor/jquery-1.11.2.min.js"></script>
+
+</head>
+<body>
+<div id="supportsGeolocation"></div>
+<div id="latitude"></div>
+<div id="longitude"></div>
+<script>
+if (Modernizr.geolocation) {
+	$('#supportsGeolocation').text('This browser supports geolocation');
+	navigator.geolocation.getCurrentPosition(showPosition);
+    
+} else {
+   $('#supportsGeolocation').text('This browser does not support geolocation');
+}
+
+function showPosition(position){
+$("#latitude").text(position.coords.latitude);
+$("#longitude").text(position.coords.longitude);
+}
+</script>
+</body>
