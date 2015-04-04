@@ -25,11 +25,11 @@ li {
 <div id="supportsDragAndDrop"></div>
 
 <ul id="drag-elements">
-  <li draggable="true"  id="one">Element One</li>
-  <li draggable="true"  id="two">Element Two</li>
-  <li draggable="true"  id="three">Element Three</li>
-  <li draggable="true"  id="four">Element Four</li>
-  <li draggable="true"  id="five">Element Five</li>
+  <li id="one">Element One</li>
+  <li id="two">Element Two</li>
+  <li id="three">Element Three</li>
+  <li id="four">Element Four</li>
+  <li id="five">Element Five</li>
 </ul>
 
 <div id="drop-target-one" ondrop="drop(event)" ondragover="allowDrop(event)">
@@ -39,13 +39,13 @@ li {
 <script>
 if (Modernizr.draganddrop) {
   $("#supportsDragAndDrop").text("This browser supports drag and drop");
+  $("#drag-elements li").on('dragstart',function(e){
+    drag(e.originalEvent);
+  });
+  $("#drag-elements li").attr("draggable",true);
 } else {
   $("#supportsDragAndDrop").text("This browser does not support drag and drop");
 }
-
-$("#drag-elements li").on('dragstart',function(e){
-    drag(e.originalEvent);
-});
 
 function allowDrop(ev) {
     ev.preventDefault();
